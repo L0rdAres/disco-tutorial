@@ -5,23 +5,22 @@ from random import randint
 from disco import client
 
 class TutorialPlugin(Plugin):
-    @Plugin.listen('GuildCreate')
+    @Plugin.listen('GuildMemberAdd')
     def listen_server(self, event):
-        owner = event.owner.user
-        #owner.open_dm().send_message('Hello {}'.format(owner.username))
-        #client.Client.api.channels_messages_create('399370072612667394', 'Guild Owners DM Sent to {}!'.format(owner.username))
-
+        member = event.member.user
+        member.open_dm().send_message('Hello {},'.format(member.username))
+        member.open_dm().send_message('We Welcome you to server! Before we begin, We need to go over a few rules')
+    
     @Plugin.command('test')
     def command_test(self, event):
         embed = MessageEmbed()
 
         #sets the title of the embed
-        embed.title = 'This is a test embed'
-        embed.set_author(name= 'LordAres#4401', url= 'https://blog.ares.party', icon_url= 'https://blog.ares.party/content/images/2018/01/pfp.gif')
-        embed.url = 'https://discordapp.com'
-        embed.description = 'This is an embed'
+        embed.title = 'Game Center Central'
+        embed.set_author(name= 'Game Center Central', url= 'https://discord.ares.party', icon_url= 'https://blog.ares.party/content/images/2018/01/pfp.gif')
+        embed.description = 'A server built on on the topics of games and other things.'
         #Inline field 1
-        embed.add_field(name='Why does Ares break shit?', value='Well. Becuase he can and he does :stuck_out_tongue:')
+        embed.add_field(name='Why is our server different', value='Well, Its different in many ways.')
         #Inline field 2
         embed.add_field(name= 'What does ares break?', value= 'Everything.')
         #Inline field 3
@@ -40,4 +39,12 @@ class TutorialPlugin(Plugin):
 
     @Plugin.command('ping')
     def command_ping(self, event):
-        event.msg.reply('pong!') 
+        event.msg.reply('pong!')
+
+    @Plugin.command('echo', '<content:str...>')
+    def on_echo_command(self, event, content):
+        event.msg.reply(content)
+
+    @Plugin.command('anthem')
+    def command_anthem(self, event):
+        event.msg.reply('https://www.youtube.com/watch?v=f2dJxFIV28Y')
