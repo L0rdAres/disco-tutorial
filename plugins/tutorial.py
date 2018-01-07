@@ -2,8 +2,15 @@ from disco.bot import Plugin
 from disco.types.message import MessageEmbed
 from datetime import datetime
 from random import randint
+from disco import client
 
 class TutorialPlugin(Plugin):
+    @Plugin.listen('GuildCreate')
+    def listen_server(self, event):
+        owner = event.owner.user
+        #owner.open_dm().send_message('Hello {}'.format(owner.username))
+        #client.Client.api.channels_messages_create('399370072612667394', 'Guild Owners DM Sent to {}!'.format(owner.username))
+
     @Plugin.command('test')
     def command_test(self, event):
         embed = MessageEmbed()
@@ -26,3 +33,11 @@ class TutorialPlugin(Plugin):
         #color
         embed.color = randint(0, 16777215)
         event.msg.reply(embed=embed)
+
+    @Plugin.command('emoji', '<emoji:str...>')
+    def command_emoji(self, event, emoji):
+        event.msg.reply(emoji)
+
+    @Plugin.command('ping')
+    def command_ping(self, event):
+        event.msg.reply('pong!') 
